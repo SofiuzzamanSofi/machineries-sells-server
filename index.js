@@ -33,13 +33,29 @@ async function run() {
 
     //MONGODB COLLECTIONS --------
     const database = client.db("machineries-sells");
-
+    const usersCollection = database.collection("users");
 
     try {
-        client.connect(err => {
-            const collection = client.db("test").collection("devices");
-            // perform actions on the collection object
-            console.log("db connected")
+
+        app.post("/user", async (req, res) => {
+            const user = req?.body;
+            const query = { email: user?.email };
+            const findUser = await usersCollection.findOne(query);
+            if (findUser) {
+                res.send({
+                    success: false,
+                    message: `${user?.email} Already register, pls login`,
+                });
+            } else {
+                const result = await usersCollection.insertOne(user);
+                res.send({
+                    success: true,
+                    message: `Successfully Create the user ${user?.email}`,
+                    data: result,
+                });
+            }
+            // console.log(user);
+            // console.log(result);
         });
 
 
