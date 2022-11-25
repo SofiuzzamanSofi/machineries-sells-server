@@ -6,12 +6,12 @@ site type: server side
 
  Server side Link-
 
- [Machineries-Sells-Server ]().
+ [Machineries-Sells-Server ](https://machineries-sells-server.vercel.app).
 
 
  Live site Link-
 
- [Machineries-Sells-Server]().
+ [Machineries-Sells-Client](https://machineries-sells.web.app).
 
 
 

@@ -31,6 +31,27 @@ app.use(express.json());
 
 async function run() {
 
+    //MONGODB COLLECTIONS --------
+    const database = client.db("machineries-sells");
+
+
+    try {
+        client.connect(err => {
+            const collection = client.db("test").collection("devices");
+            // perform actions on the collection object
+            console.log("db connected")
+        });
+
+
+
+
+
+
+
+    } catch (error) {
+        console.log("Catch error from under try>> catch function:", error);
+    };
+
 };
 run().catch(error => console.log(error));
 
