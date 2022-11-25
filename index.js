@@ -37,6 +37,9 @@ async function run() {
 
     try {
 
+
+
+        // save user on database with role / unrole / admin--- 
         app.post("/user", async (req, res) => {
             const user = req?.body;
             const query = { email: user?.email };
@@ -53,9 +56,32 @@ async function run() {
                     message: `Successfully Create the user ${user?.email}`,
                     data: result,
                 });
-            }
+            };
             // console.log(user);
             // console.log(result);
+
+
+            // create & send token to clientSide for store localStorage-- 
+            app.get("/jwt", async (req, res) => {
+                const email = req?.query?.email;
+                const query = { email: email };
+                const findUser = await usersCollection.findOne(query);
+                if (findUser) {
+                    const token = jwt.sign({ email }, process.env.ACCESS_TOKEN);
+                    // const token = jwt.sign({email}, process.env.ACCESS_TOKEN, {expiresIn: "1h"});
+                    res.send({
+                        success: true,
+                        message: "Successfully got/create the token",
+                        data: token,
+                    });
+                } else {
+                    res.status(403).send({
+                        success: false,
+                        message: "UnAuthorize user login/signUp again.",
+                    });
+                };
+            });
+
         });
 
 
