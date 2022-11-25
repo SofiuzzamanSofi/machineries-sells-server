@@ -1,0 +1,20 @@
+// make trial products ----
+[
+    {
+        "categoryCompany": "JINTIAN",
+        "categorySize": "",
+        "categorySelf": "",
+        "picture": "",
+        "name": "",
+        "location": "",
+        "resalePrice": 120,
+        "originalPrice": 120,
+        "mfYear": 1994,
+        "dateOfPost": "",
+        "timeOfPost": "",
+        "sellerName": "",
+        "sellerEmail": "",
+        "sellerVerify": "",
+        "userInfo": ""
+    }
+]

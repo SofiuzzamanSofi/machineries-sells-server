@@ -80,6 +80,7 @@ async function run() {
                         message: "UnAuthorize user login/signUp again.",
                     });
                 };
+                // console.log(query)
             });
 
         });
