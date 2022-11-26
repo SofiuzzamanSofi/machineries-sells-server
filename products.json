@@ -1,20 +1,28 @@
-// make trial products ----
+// make trial products ----//
 [
     {
         "categoryCompany": "JINTIAN",
-        "categorySize": "",
-        "categorySelf": "",
-        "picture": "",
-        "name": "",
-        "location": "",
+        "categorySize": "20",
+        "categorySelf": "no",
+        "product-name": "4HP Water Cooled Diesel Engine with Safe and Reliable (R170A)",
+        "Ignition-Mode": "Compression-IgnitionSpeed",
+        "SpeedCooling-Cylinder": "Water-CooledIntake",
+        "Pressure Impulse": "Naturally-AspiratedPiston",
+        "Piston-Movement": "Reciprocating",
+        "Fuel": "Diesel",
+        "details": "R170A type single cylinder diesel engine for zhejiang three-ring, JR170A is enhanced, cylinder diameter and travel have increased to 70 mm, maximum power can reach 3.23 W, higher stability and beautiful appearance is concise and easy, reliable quality, long service life, small vibration, wide range of USES: can form a complete set of small tractor,agricultural machinery, small construction machinery, generator set, pump, air compressor. Inland river vessels and agricultural and sideline products processing (threshing machine, rice milling machine, grinding machine, feed machine) power plant",
+        "picture": "https://i.ytimg.com/vi/PBIyn4ajfLo/maxresdefault.jpg",
+        "location": "Chapai-Nawabganj",
         "resalePrice": 120,
-        "originalPrice": 120,
+        "originalPrice": 329,
         "mfYear": 1994,
-        "dateOfPost": "",
-        "timeOfPost": "",
-        "sellerName": "",
-        "sellerEmail": "",
-        "sellerVerify": "",
+        "yearOfUse": 4,
+        "dateOfPost": "24 Nov, 2022",
+        "timeOfPost": "4:29 pm",
+        "sellerName": "Md. Ibrahim Kahli",
+        "sellerEmail": "ibrahimkhalil@gmail.com",
+        "sellerVerify": true,
+        "name": "",
         "userInfo": ""
     }
 ]
