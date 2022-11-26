@@ -33,10 +33,38 @@ async function run() {
 
     //MONGODB COLLECTIONS --------
     const database = client.db("machineries-sells");
+    const productsCategoryCollection = database.collection("productsCategory");
+    const productsCollection = database.collection("products");
     const usersCollection = database.collection("users");
 
     try {
 
+
+        // get all products category--
+        app.get("/productsCategory", async (req, res) => {
+            const query = {};
+            const result = await productsCategoryCollection.find(query).toArray();
+            res.send({
+                success: true,
+                message: "Successfully get all products",
+                data: result,
+            });
+        });
+
+
+
+        // get all products ---
+        app.get("/products/:id", async (req, res) => {
+            const categorySize = req?.params?.id;
+            const query = { categorySize: categorySize };
+            const result = await productsCollection.find(query).toArray();
+            res.send({
+                success: true,
+                message: "Successfully get all products",
+                data: result,
+            });
+            console.log(categorySize);
+        });
 
 
         // save user on database with role / unrole / admin--- 
@@ -107,3 +135,4 @@ app.get("/", (req, res) => {
 
 
 app.listen(port, () => console.log(`machineries running ${port}`.bgCyan));
+
