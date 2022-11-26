@@ -56,14 +56,16 @@ async function run() {
         // get all products ---
         app.get("/products/:id", async (req, res) => {
             const categorySize = req?.params?.id;
-            const query = { categorySize: categorySize };
+            let query = { categorySize: categorySize };
+            if (categorySize === "all") {
+                query = {};
+            };
             const result = await productsCollection.find(query).toArray();
             res.send({
                 success: true,
                 message: "Successfully get all products",
                 data: result,
             });
-            console.log(categorySize);
         });
 
 
