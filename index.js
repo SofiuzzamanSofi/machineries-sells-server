@@ -36,11 +36,12 @@ async function run() {
     const productsCategoryCollection = database.collection("productsCategory");
     const productsCollection = database.collection("products");
     const usersCollection = database.collection("users");
+    const bookingsCollection = database.collection("bookings");
 
     try {
 
 
-        // get all products category--
+        // get category array of products--
         app.get("/productsCategory", async (req, res) => {
             const query = {};
             const result = await productsCategoryCollection.find(query).toArray();
@@ -53,7 +54,7 @@ async function run() {
 
 
 
-        // get all products ---
+        // get all(all) products and by category(under category all)  ---
         app.get("/products/:id", async (req, res) => {
             const categorySize = req?.params?.id;
             let query = { categorySize: categorySize };
@@ -68,57 +69,91 @@ async function run() {
             });
         });
 
-
-        // save user on database with role / unrole / admin--- 
-        app.post("/user", async (req, res) => {
-            const user = req?.body;
-            const query = { email: user?.email };
-            const findUser = await usersCollection.findOne(query);
-            if (findUser) {
-                res.send({
-                    success: false,
-                    message: `${user?.email} Already register, pls login`,
-                });
-            } else {
-                const result = await usersCollection.insertOne(user);
+        // insert add product / seller add the product---
+        app.post("/products", async (req, res) => {
+            const product = req?.body;
+            const result = await productsCollection.insertOne(product);
+            if (result.acknowledged) {
                 res.send({
                     success: true,
-                    message: `Successfully Create the user ${user?.email}`,
+                    message: "Successfully get all products",
                     data: result,
                 });
             };
-            // console.log(user);
-            // console.log(result);
+        });
 
 
-            // create & send token to clientSide for store localStorage-- 
-            app.get("/jwt", async (req, res) => {
-                const email = req?.query?.email;
-                const query = { email: email };
-                const findUser = await usersCollection.findOne(query);
-                if (findUser) {
-                    const token = jwt.sign({ email }, process.env.ACCESS_TOKEN);
-                    // const token = jwt.sign({email}, process.env.ACCESS_TOKEN, {expiresIn: "1h"});
-                    res.send({
-                        success: true,
-                        message: "Successfully got/create the token",
-                        data: token,
-                    });
-                } else {
-                    res.status(403).send({
-                        success: false,
-                        message: "UnAuthorize user login/signUp again.",
-                    });
-                };
-                // console.log(query)
-            });
-
+        //booking the products if didn't same---
+        app.post("/bookings", async (req, res) => {
+            const bookingProduct = req?.body;
+            const result = await bookingsCollection.insertOne(bookingProduct);
+            if (result.acknowledged) {
+                res.send({
+                    success: true,
+                    message: ` Dear ${bookingProduct?.buyerName}, Your Successfully Booked.`,
+                    data: result,
+                })
+            } else {
+                res.send({
+                    success: false,
+                    message: ` Dear ${bookingProduct?.buyerName} Booked NOT POSSIBLE. for .`,
+                    data: result,
+                });
+            };
         });
 
 
 
 
 
+
+
+        // save user on database with role / unrole / admin--- 
+        // gate user from database (2 work in 1 function)
+        app.post("/user", async (req, res) => {
+            const user = req?.body;
+            const query = { email: user?.email };
+            const findUser = await usersCollection.findOne(query);
+            if (!findUser) {
+                // create new user on db --
+                const result = await usersCollection.insertOne(user);
+                res.send({
+                    success: true,
+                    message: `Successfully Create the user ${user?.email}`,
+                    data: result,
+                });
+            } else {
+                // get already exist user from db--
+                res.send({
+                    success: false,
+                    message: `${user?.email} Already user on my Data Base`,
+                    data: findUser,
+                });
+            };
+            // console.log("call get user function", "under get user function")
+        });
+
+        // create & send token to clientSide for store localStorage-- 
+        app.get("/jwt", async (req, res) => {
+            const email = req?.query?.email;
+            const query = { email: email };
+            const findUser = await usersCollection.findOne(query);
+            if (findUser) {
+                const token = jwt.sign({ email }, process.env.ACCESS_TOKEN);
+                // const token = jwt.sign({email}, process.env.ACCESS_TOKEN, {expiresIn: "1h"});
+                res.send({
+                    success: true,
+                    message: "Successfully got/create the token",
+                    data: token,
+                });
+            } else {
+                res.status(403).send({
+                    success: false,
+                    message: "UnAuthorize user login/signUp again.",
+                });
+            };
+            // console.log(query)
+        });
 
 
     } catch (error) {
