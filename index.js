@@ -82,6 +82,20 @@ async function run() {
             };
         });
 
+        // get products by seller email adress ------
+        app.get("/myProducts", async (req, res) => {
+            const email = req.query?.email;
+            const query = { sellerEmail: email };
+            const result = await productsCollection.find(query).toArray();
+            res.send({
+                success: true,
+                message: `Succesfully get all product of ${email}`,
+                data: result,
+            });
+        });
+
+
+
 
         //booking the products if didn't same---
         app.post("/bookings", async (req, res) => {
@@ -101,7 +115,6 @@ async function run() {
                 });
             };
         });
-
 
 
 
