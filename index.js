@@ -131,6 +131,26 @@ async function run() {
             // console.log("finished add function")
         });
 
+        // get products by advertisement ----
+        app.get("/advertised/products", async (req, res) => {
+            const query = {};
+            const result = await productsCollection.find(query).toArray();
+            const advertise = result?.filter(r => r.advertiseName)
+            if (advertise.length) {
+                res.send({
+                    success: true,
+                    message: "Successfully get all products",
+                    data: advertise,
+                });
+            } else {
+                res.send({
+                    success: false,
+                    message: "No advertisement product found",
+                });
+            };
+        });
+
+
 
 
         //booking the products if didn't same---
