@@ -69,6 +69,21 @@ async function run() {
             });
         });
 
+        // get product (one Product )/ details by product id---
+        app.get("/product/:id", async (req, res) => {
+            const id = req?.params?.id;
+            let query = { _id: ObjectId(id) };
+            // find on(but find/all . to array method for make array)---
+            const result = await productsCollection.findOne(query);
+            res.send({
+                success: true,
+                message: "Successfully get all products",
+                data: result,
+            });
+        });
+
+
+
         // insert add product / seller add the product---
         app.post("/products", async (req, res) => {
             const product = req?.body;
@@ -171,6 +186,50 @@ async function run() {
                 });
             };
         });
+
+
+        // show booking by user/buyer ---
+        app.get("/mybooking", async (req, res) => {
+            const email = req.query?.email;
+            const query = { buyerEmail: email };
+            const result = await bookingsCollection.find(query).toArray();
+            if (result) {
+                res.send({
+                    success: true,
+                    message: "Successfully get your orders.",
+                    data: result,
+                })
+            } else {
+                res.send({
+                    success: false,
+                    message: ` Dear ${bookingProduct?.buyerName} Booked NOT POSSIBLE. for .`,
+                    data: result,
+                });
+            };
+            // console.log("bookingsss")
+        });
+
+        // show user/BUYER =(MY BUYER) info by seller email ---
+        app.get("/mybuyer", async (req, res) => {
+            const email = req.query?.email;
+            const query = { sellerEmail: email };
+            const result = await bookingsCollection.find(query).toArray();
+            if (result) {
+                res.send({
+                    success: true,
+                    message: "Successfully get your orders.",
+                    data: result,
+                })
+            } else {
+                res.send({
+                    success: false,
+                    message: ` Dear ${bookingProduct?.buyerName} Booked NOT POSSIBLE. for .`,
+                    data: result,
+                });
+            };
+            // console.log("bookingsss")
+        });
+
 
 
         // get user buyer seller admin ---

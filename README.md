@@ -15,3 +15,18 @@ site type: server side
 
 
 
+ Used This Server Site:-
+
+ <li>Express </li>
+ <li>Cors </li>
+ <li>Colors </li>
+ <li>DotEnv </li>
+ <li>JsonWebToken </li>
+ <li>MongoDB</li>
+ <li>Stripe</li>
+
+
+  Database:-
+ <li>MongoDB </li>
+  Database Type:-
+ <li>NoSQL</li>
