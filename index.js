@@ -95,6 +95,42 @@ async function run() {
         });
 
 
+        // add products as advertisemetn ----
+        app.put("/advertised/products/:id", async (req, res) => {
+            const id = req?.params?.id;
+            const filter = { _id: ObjectId(id) };
+            const advertiseName = req?.body?.advertiseName;
+            // console.log(id, advertiseName);
+            const foundProduct = productsCollection.findOne(filter);
+            if (foundProduct.advertiseName) {
+                res.send({
+                    success: false,
+                    message: `Product ID: ${id} already on advertise: ${advertiseName} `,
+                });
+            } else {
+                const updateDoc = {
+                    $set: {
+                        advertiseName: advertiseName,
+                    }
+                };
+                const options = { upsert: true };
+                const result = await productsCollection.updateOne(filter, updateDoc, options);
+                if (result?.acknowledged) {
+                    res.send({
+                        success: true,
+                        message: `Product ID: ${id} successfully add advertisement sections`,
+                        data: result,
+                    });
+                } else {
+                    res.send({
+                        success: false,
+                        message: `Product ID: ${id} already on advertise: ${advertiseName} or something happened wrong `,
+                    });
+                };
+            };
+            // console.log("finished add function")
+        });
+
 
 
         //booking the products if didn't same---
