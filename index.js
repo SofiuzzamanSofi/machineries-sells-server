@@ -173,8 +173,49 @@ async function run() {
         });
 
 
+        // get user buyer seller admin ---
+        app.get("/user/:type", async (req, res) => {
+            const type = req?.params?.type;
+            let query = { role: type };
+            if (type === "all") {
+                query = {};
+                const result = await usersCollection.find(query).toArray();
+                const buyer = result.filter(r => !r.role);
+                res.send({
+                    success: true,
+                    message: `Successfully got all ${type}.`,
+                    data: buyer,
+                });
+            } else {
+                const result = await usersCollection.find(query).toArray();
+                if (result.length) {
+                    res.send({
+                        success: true,
+                        message: `Successfully got all ${type}.`,
+                        data: result,
+                    });
+                } else {
+                    res.send({
+                        success: false,
+                        message: "Something wrond no type found",
+                    });
+                };
+            };
+            // console.log(type);
+        });
 
-
+        // delete user buyer seller from database -----
+        app.delete("/user/:id", async (req, res) => {
+            const id = req?.params?.id;
+            const query = { _id: ObjectId(id) };
+            const result = await usersCollection.deleteOne(query);
+            res.send({
+                success: true,
+                message: `Successfully deleted Id: ${id}.`,
+                data: result,
+            });
+            // console.log(query);
+        });
 
 
         // save user on database with role / unrole / admin--- 
